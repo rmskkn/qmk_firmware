@@ -7,7 +7,7 @@ from dotty_dict import dotty
 
 from milc import cli
 
-from qmk.constants import CHIBIOS_PROCESSORS, LUFA_PROCESSORS, VUSB_PROCESSORS
+from qmk.constants import CHIBIOS_PROCESSORS, LUFA_PROCESSORS, VUSB_PROCESSORS, ESP
 from qmk.c_parse import find_layouts, parse_config_h_file, find_led_config
 from qmk.json_schema import deep_update, json_load, validate
 from qmk.keyboard import config_h, rules_mk
@@ -606,6 +606,9 @@ def _extract_rules_mk(info_data, rules):
     elif info_data['processor'] in LUFA_PROCESSORS + VUSB_PROCESSORS:
         avr_processor_rules(info_data, rules)
 
+    elif info_data['processor'] in ESP:
+        esp_processor_rules(info_data, rules)
+
     else:
         cli.log.warning("%s: Unknown MCU: %s" % (info_data['keyboard_folder'], info_data['processor']))
         unknown_processor_rules(info_data, rules)
@@ -796,6 +799,19 @@ def avr_processor_rules(info_data, rules):
     info_data['processor_type'] = 'avr'
     info_data['platform'] = rules['ARCH'] if 'ARCH' in rules else 'unknown'
     info_data['platform_key'] = 'avr'
+    info_data['protocol'] = 'V-USB' if info_data['processor'] in VUSB_PROCESSORS else 'LUFA'
+
+    # FIXME(fauxpark/anyone): Eventually we should detect the protocol by looking at PROTOCOL inherited from mcu_selection.mk:
+    # info_data['protocol'] = 'V-USB' if rules.get('PROTOCOL') == 'VUSB' else 'LUFA'
+
+    return info_data
+
+def esp_processor_rules(info_data, rules):
+    """Setup the default info for an ESP board.
+    """
+    info_data['processor_type'] = 'esp32'
+    info_data['platform'] = 'esp32'
+    info_data['platform_key'] = 'esp32'
     info_data['protocol'] = 'V-USB' if info_data['processor'] in VUSB_PROCESSORS else 'LUFA'
 
     # FIXME(fauxpark/anyone): Eventually we should detect the protocol by looking at PROTOCOL inherited from mcu_selection.mk:
