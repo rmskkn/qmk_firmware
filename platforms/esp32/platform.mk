@@ -1,7 +1,7 @@
 # Compiler settings
 #
 
-TOOLCHAIN := /home/roman/.espressif/tools/riscv32-esp-elf/esp-12.2.0_20230208/riscv32-esp-elf/bin/riscv32-esp-elf-
+TOOLCHAIN := /home/roman/.espressif/tools/xtensa-esp32s3-elf/esp-12.2.0_20230208/xtensa-esp32s3-elf/bin/xtensa-esp32s3-elf-
 CC = $(CC_PREFIX) $(TOOLCHAIN)gcc
 OBJCOPY = $(TOOLCHAIN)objcopy
 OBJDUMP = $(TOOLCHAIN)objdump
