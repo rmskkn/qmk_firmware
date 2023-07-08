@@ -7,6 +7,16 @@ OBJDUMP = $(TOOLCHAIN)objdump
 SIZE = $(TOOLCHAIN)size
 AR = $(TOOLCHAIN)ar
 NM = $(TOOLCHAIN)nm
+BIN = $(OBJCOPY) -O binary
 
-CFLAGS := -mlongcalls
-CXXFLAGS := -mlongcalls
+CFLAGS := -ffreestanding -mlongcalls -DMATRIX_INPUT_PRESSED_STATE=0
+CXXFLAGS := -mlongcalls -fno-rtti
+LDFLAGS := -specs=nosys.specs
+
+PLATFORM_SRC = \
+		$(PLATFORM_COMMON_DIR)/port.c \
+		$(PLATFORM_COMMON_DIR)/syscall-fallbacks.c
+
+#
+%.bin: %..elf sizeafter
+	echo "Custom elf->bin"
