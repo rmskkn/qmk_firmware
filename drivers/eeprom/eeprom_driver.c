@@ -16,6 +16,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "eeprom_driver.h"
 
@@ -50,11 +51,16 @@ void eeprom_write_dword(uint32_t *addr, uint32_t value) {
 }
 
 void eeprom_update_block(const void *buf, void *addr, size_t len) {
-    uint8_t read_buf[len];
+    uint8_t *read_buf = malloc(len);
+    if (read_buf == NULL)
+        return;
+
     eeprom_read_block(read_buf, addr, len);
     if (memcmp(buf, read_buf, len) != 0) {
         eeprom_write_block(buf, addr, len);
     }
+
+    free(read_buf);
 }
 
 void eeprom_update_byte(uint8_t *addr, uint8_t value) {

@@ -193,8 +193,6 @@ cpfirmware: $(FIRMWARE_FORMAT)
 eep: $(BUILD_DIR)/$(TARGET).eep
 lss: $(BUILD_DIR)/$(TARGET).lss
 sym: $(BUILD_DIR)/$(TARGET).sym
-LIBNAME=lib$(TARGET).a
-lib: $(LIBNAME)
 
 # Display size of file, modifying the output so people don't mistakenly grab the hex output
 BINARY_SIZE = $(SIZE) --target=$(FORMAT) $(BUILD_DIR)/$(TARGET).hex | $(SED) -e 's/\.build\/.*$$/$(TARGET).$(FIRMWARE_FORMAT)/g'

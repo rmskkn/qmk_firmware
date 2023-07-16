@@ -73,4 +73,6 @@ int main(void) {
 
         housekeeping_task();
     }
+
+    return 0;
 }

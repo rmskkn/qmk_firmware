@@ -1,9 +1,12 @@
 #include <stdint.h>
-#include <stdatomic.h>
 #include "timer.h"
 
+#if !defined(ESP32C3)
+#include <stdatomic.h>
 static atomic_uint_least32_t current_time = 0;
-
+#else
+static uint32_t current_time = 0;  // u32 access is atomic on the esp32c3
+#endif
 void timer_init(void) {
     current_time = 0;
 }
