@@ -22,6 +22,8 @@
 /* layer config */
 #define TAPPING_TOGGLE 1
 
+#define MASTER_RIGHT
+
 /* disable action features */
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
