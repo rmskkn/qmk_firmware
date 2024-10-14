@@ -24,6 +24,7 @@
 
 #define MASTER_RIGHT
 
+//#define SERIAL_DEBUG
 /* disable action features */
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
