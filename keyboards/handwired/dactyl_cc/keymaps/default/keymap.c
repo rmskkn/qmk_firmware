@@ -30,8 +30,8 @@ enum layers {
     { k10, k11, k12, k13, k14, k15},                                            \
     { k20, k21, k22, k23, k24, k25},                                            \
     { k30, k31, k32, k33, k34, k35},                                            \
-    { k50, k40, k41, k42, k43, KC_NO},                                          \
-    { k48, k52, k51, k49, k53, KC_NO},                                          \
+    { KC_NO, k40, k41, k42, k43, k50},                                          \
+    { KC_NO, k53, k49, k51, k52, k48},                                          \
                                                                                 \
     {k06, k07, k08, k09, k0A, k0B },                                            \
     {k16, k17, k18, k19, k1A, k1B },                                            \
@@ -63,3 +63,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                        _______,    ALT_BSP 
     )
 };
+
+#if 0
+void keyboard_post_init_user(void) {
+  // Customise these values to desired behaviour
+  debug_enable=true;
+  //debug_matrix=true;
+  debug_keyboard=true;
+  //debug_mouse=true;
+}
+#endif
