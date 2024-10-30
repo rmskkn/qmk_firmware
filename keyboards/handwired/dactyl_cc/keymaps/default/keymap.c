@@ -4,7 +4,8 @@
 #include QMK_KEYBOARD_H
 
 enum layers {
-    BASE,
+    COLEMAK,
+    QWERTY,
     NAV
 };
 
@@ -12,6 +13,17 @@ enum layers {
 #define CTL_CAP LCTL_T(KC_CAPS)
 #define ALT_BSP LALT_T(KC_BSPC)
 #define LT_SCLN LT(NAV, KC_SCLN)
+
+// - Home row modifiers:
+#define KC_GU_F LGUI_T(KC_F)          // Left Gui
+#define KC_CT_V LCTL_T(KC_V)          // Left Ctrl
+#define KC_AL_S LALT_T(KC_S)          // Left Alt
+#define KC_LS_D LSFT_T(KC_D)          // Left Shift
+
+#define KC_GU_J RGUI_T(KC_J)          // Right Gui
+#define KC_AL_L LALT_T(KC_L)          // Left Alt
+#define KC_CT_M RCTL_T(KC_M)          // Right Ctrl
+#define KC_RS_K RSFT_T(KC_K)          // Right Shift
 
 #undef LAYOUT
 #define LAYOUT(                                                                \
@@ -42,16 +54,28 @@ enum layers {
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [BASE] = LAYOUT(
+    [COLEMAK] = LAYOUT(
         KC_GRV,  KC_1,    KC_2,   KC_3,    KC_4,    KC_5,                                         KC_6, KC_7,    KC_8,    KC_9,   KC_0,    KC_HOME,
-        KC_TAB,  KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,                                         KC_Y, KC_U,    KC_I,    KC_O,   KC_P,    KC_BSLS,
-        CTL_CAP, KC_A,    KC_S,   KC_D,    KC_F,    KC_G,                                         KC_H, KC_J,    KC_K,    KC_L,   LT_SCLN, KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,   KC_C,    KC_V,    KC_B,                                         KC_N, KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+        KC_TAB,  KC_Q,    KC_W,   KC_F,    KC_P,    KC_B,                                         KC_J, KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSLS,
+        CTL_CAP, KC_A,    KC_R,   KC_S,    KC_T,    KC_G,                                         KC_M, KC_N,    KC_E,    KC_I,   KC_O,    KC_QUOT,
+        KC_LSFT, KC_Z,    KC_X,   KC_C,    KC_D,    KC_V,                                         KC_K, KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RCTL,
                  KC_MINS, KC_EQL, KC_LBRC, KC_RBRC,                                                     KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT,
-                                                               TT(NAV), KC_DEL,    KC_PGUP, KC_RCTL,
+                                                               TT(NAV), KC_DEL,    KC_PGUP, KC_RSFT,
                                                      KC_BSPC, CTL_ESC, KC_LGUI,    KC_PGDN, KC_ENT, KC_SPC,
                                                                        KC_LALT,    KC_RALT
     ),
+
+    [QWERTY] = LAYOUT(
+        KC_GRV,  KC_1,    KC_2,   KC_3,    KC_4,    KC_5,                                         KC_6, KC_7,    KC_8,    KC_9,   KC_0,    KC_HOME,
+        KC_TAB,  KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,                                         KC_Y, KC_U,    KC_I,    KC_O,   KC_P,    KC_BSLS,
+        CTL_CAP, KC_A,    KC_AL_S,KC_LS_D, KC_GU_F, KC_G,                                         KC_H, KC_GU_J, KC_RS_K, KC_AL_L,LT_SCLN, KC_QUOT,
+        KC_LSFT, KC_Z,    KC_X,   KC_C,    KC_CT_V, KC_B,                                         KC_N, KC_CT_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+                 KC_MINS, KC_EQL, KC_LBRC, KC_RBRC,                                                     KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT,
+                                                               _______, _______,    _______, _______,
+                                                     _______,  _______, _______,    _______, _______, _______,
+                                                                        _______,    _______
+    ),
+
     [NAV] = LAYOUT(
         QK_BOOT, KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT, KC_NO,                                           KC_BRIU, KC_P7,   KC_P8,  KC_P9,   KC_NO,   QK_BOOT,
         _______, KC_VOLU, KC_WBAK, MS_UP,   KC_WFWD, MS_WHLU,                                         KC_BRID, KC_P4,   KC_P5,  KC_P6,   KC_PMNS, _______,
