@@ -3,14 +3,19 @@
 
 #include QMK_KEYBOARD_H
 
+#include "debug.h"
+
 enum layers {
     COLEMAK,
-    QWERTY,
-    NAV
+/*  QWERTY, */
+    NAV,
+    SYM
 };
 
 #define CTL_ESC LCTL_T(KC_ESC)
 #define CTL_CAP LCTL_T(KC_CAPS)
+#define SHF_ENT SFT_T(KC_ENT)
+#define ALT_SPC ALT_T(KC_SPC)
 #define ALT_BSP LALT_T(KC_BSPC)
 #define LT_SCLN LT(NAV, KC_SCLN)
 
@@ -21,7 +26,7 @@ enum layers {
 #define KC_LS_D LSFT_T(KC_D)          // Left Shift
 
 #define KC_GU_J RGUI_T(KC_J)          // Right Gui
-#define KC_AL_L LALT_T(KC_L)          // Left Alt
+#define KC_AL_L RALT_T(KC_L)          // Left Alt
 #define KC_CT_M RCTL_T(KC_M)          // Right Ctrl
 #define KC_RS_K RSFT_T(KC_K)          // Right Shift
 
@@ -60,11 +65,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CTL_CAP, KC_A,    KC_R,   KC_S,    KC_T,    KC_G,                                         KC_M, KC_N,    KC_E,    KC_I,   KC_O,    KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,   KC_C,    KC_D,    KC_V,                                         KC_K, KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RCTL,
                  KC_MINS, KC_EQL, KC_LBRC, KC_RBRC,                                                     KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT,
-                                                               TT(NAV), KC_DEL,    KC_PGUP, KC_RSFT,
-                                                     KC_BSPC, CTL_ESC, KC_LGUI,    KC_PGDN, KC_ENT, KC_SPC,
+                                                              TT(NAV), KC_RSFT,    KC_PGUP, KC_DEL,
+                                                     LT(SYM, KC_BSPC), CTL_ESC,    KC_LGUI, KC_PGDN, SHF_ENT, ALT_SPC,
                                                                        KC_LALT,    KC_RALT
     ),
-
+/*
     [QWERTY] = LAYOUT(
         KC_GRV,  KC_1,    KC_2,   KC_3,    KC_4,    KC_5,                                         KC_6, KC_7,    KC_8,    KC_9,   KC_0,    KC_HOME,
         KC_TAB,  KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,                                         KC_Y, KC_U,    KC_I,    KC_O,   KC_P,    KC_BSLS,
@@ -75,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                      _______,  _______, _______,    _______, _______, _______,
                                                                         _______,    _______
     ),
-
+*/
     [NAV] = LAYOUT(
         QK_BOOT, KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT, KC_NO,                                           KC_BRIU, KC_P7,   KC_P8,  KC_P9,   KC_NO,   QK_BOOT,
         _______, KC_VOLU, KC_WBAK, MS_UP,   KC_WFWD, MS_WHLU,                                         KC_BRID, KC_P4,   KC_P5,  KC_P6,   KC_PMNS, _______,
@@ -85,15 +90,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                               _______, _______,    KC_HOME, _______,
                                                      KC_BTN1, KC_BTN2, _______,    KC_END,  _______, _______,
                                                                        _______,    ALT_BSP 
+    ),
+
+     [SYM] = LAYOUT(
+        KC_NO,   KC_NO,   _______, _______, _______, _______,                                         _______, KC_P7,   KC_P8,  KC_P9,   KC_NO,   _______,
+        _______, _______, _______, _______, _______, _______,                                         KC_BRID, KC_P4,   KC_P5,  KC_P6,   KC_PMNS, _______,
+        _______, KC_AMPR, KC_TILD, KC_LPRN, KC_RPRN, KC_EQL,                                          KC_LCBR, KC_RCBR, KC_ASTR,KC_P3,   KC_PSLS, _______,
+        KC_NO,   _______, _______, _______, _______, KC_NO,                                           KC_PAST, KC_PCMM, KC_P0,  KC_PDOT, KC_PENT, _______,
+                 _______, _______, _______, _______,                                                           KC_F9,   KC_F10, KC_F11,  KC_F12,
+                                                              _______, _______,    _______,  _______,
+                                                     _______, _______, _______,    _______,  _______, _______,
+                                                                       _______,    _______
     )
 };
 
 #if 0
 void keyboard_post_init_user(void) {
-  // Customise these values to desired behaviour
-  debug_enable=true;
+  //debug_enable=true;
   //debug_matrix=true;
-  debug_keyboard=true;
+  //debug_keyboard=true;
   //debug_mouse=true;
+}
+
+
+static const char code_to_name[60] = {
+    ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
+    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+    'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\',
+    '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        if (keycode < 60)
+            dprintf("Key: %c\n", code_to_name[keycode]);
+        else
+            dprintf("Code: %u\n", keycode);
+    }
+
+    dprintf("Tap: %u\n", record->tap.count);
+
+    return true;
 }
 #endif
