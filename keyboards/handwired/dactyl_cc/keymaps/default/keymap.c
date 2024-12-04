@@ -14,8 +14,8 @@ enum layers {
 
 #define CTL_ESC LCTL_T(KC_ESC)
 #define CTL_CAP LCTL_T(KC_CAPS)
-#define SHF_ENT SFT_T(KC_ENT)
-#define ALT_SPC ALT_T(KC_SPC)
+#define ALT_ENT ALT_T(KC_ENT)
+#define SHF_SPC SFT_T(KC_SPC)
 #define ALT_BSP LALT_T(KC_BSPC)
 #define LT_SCLN LT(NAV, KC_SCLN)
 
@@ -66,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_Z,    KC_X,   KC_C,    KC_D,    KC_V,                                         KC_K, KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_RCTL,
                  KC_MINS, KC_EQL, KC_LBRC, KC_RBRC,                                                     KC_LEFT, KC_DOWN, KC_UP,  KC_RGHT,
                                                               TT(NAV), KC_DEL,     KC_PGUP, KC_TAB,
-                                                     LT(SYM, KC_BSPC), CTL_ESC,    KC_LGUI, KC_PGDN, SHF_ENT, ALT_SPC,
+                                                     LT(SYM, KC_BSPC), CTL_ESC,    KC_LGUI, KC_PGDN, ALT_ENT, SHF_SPC,
                                                                        KC_LALT,    KC_RALT
     ),
 /*
