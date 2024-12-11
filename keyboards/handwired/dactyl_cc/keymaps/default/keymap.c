@@ -105,32 +105,53 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #if 0
 void keyboard_post_init_user(void) {
-  //debug_enable=true;
-  //debug_matrix=true;
-  //debug_keyboard=true;
-  //debug_mouse=true;
+  debug_enable=true;
+  debug_matrix=true;
+  debug_keyboard=true;
+  debug_mouse=true;
 }
-
-
-static const char code_to_name[60] = {
-    ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-    'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\',
-    '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '
-};
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        if (keycode < 60)
-            dprintf("Key: %c\n", code_to_name[keycode]);
-        else
-            dprintf("Code: %u\n", keycode);
-    }
+    static bool sym_layer_pressed = false;
 
-    dprintf("Tap: %u\n", record->tap.count);
+    // Backspace -> SYM layer toggle
+    // SYM layer is not getting toggle during rapid typing after several backspaces
+    switch(keycode)
+    {
+        case LT(SYM, KC_BSPC):
+            if (record->event.pressed) {
+                sym_layer_pressed = true;
+            }
+            else {
+                sym_layer_pressed = false;
+                layer_off(SYM);
+            }
+            break;
+        default:
+            if (sym_layer_pressed) {
+                layer_on(SYM);
+                sym_layer_pressed = false;
+            }
+    };
 
     return true;
 }
+
+#if 0
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    dprintf("%s() code: %i\n", __func__, keycode);
+    switch (keycode) {
+        case SFT_T(KC_SPC):
+            dprintf("KC_SPC TERM %i\n", QUICK_TAP_TERM - 20);
+            return QUICK_TAP_TERM - 20;
+        case LT(SYM, KC_BSPC):
+            dprintf("LT_SYM\n");
+            return 150;  //-1
+        default:
+            dprintf("default\n");
+            return QUICK_TAP_TERM;
+    }
+}
 #endif
+
