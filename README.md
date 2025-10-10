@@ -5,7 +5,7 @@ All basic preparation steps are described in
 
 1. Fetch all modules
 ```
-qmk git-submodules
+qmk git-submodule
 ```
 
 2. Compile
