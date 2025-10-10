@@ -23,7 +23,7 @@
     "split": {
         "enabled": true,
         "serial": {
-            "pin": "D0"
+            "pin": "GP0"
         }
     },
     "development_board": "promicro_rp2040",

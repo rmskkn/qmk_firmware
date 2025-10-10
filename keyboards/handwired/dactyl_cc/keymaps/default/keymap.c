@@ -81,13 +81,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                        _______,    _______
 */
     [NAV] = LAYOUT(
-        QK_BOOT, KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT, KC_NO,                                           KC_BRIU, KC_P7,   KC_P8,  KC_P9,   KC_NO,   QK_BOOT,
-        _______, KC_VOLU, KC_WBAK, KC_MS_U, KC_WFWD, KC_WH_U,                                         KC_BRID, KC_HOME, KC_UP,  KC_END,  KC_PMNS, _______,
-        _______, KC_VOLD, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,                                         KC_PPLS, KC_LEFT, KC_DOWN,KC_RGHT, KC_PSLS, _______,
+        QK_BOOT, KC_NO,   KC_MPRV, KC_MPLY, KC_NO,   KC_NO,                                           KC_BRIU, KC_P7,   KC_P8,  KC_P9,   KC_NO,   QK_BOOT,
+        _______, KC_VOLU, KC_WBAK, MS_UP,   KC_NO,   MS_WHLU,                                         KC_BRID, KC_HOME, KC_UP,  KC_END,  KC_PMNS, _______,
+        _______, KC_VOLD, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD,                                         KC_PPLS, KC_LEFT, KC_DOWN,KC_RGHT, KC_PSLS, _______,
         KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,                                           KC_PAST, KC_PCMM, KC_P0,  KC_PDOT, KC_PENT, _______,
                  KC_F5,   KC_F6,   KC_F7,   KC_F8,                                                             KC_F9,   KC_F10, KC_F11,  KC_F12,
                                                               _______, _______,    KC_HOME, _______,
-                                                     KC_BTN1, KC_BTN2, _______,    KC_END,  KC_BTN1, KC_BTN2,
+                                                     MS_BTN1, MS_BTN2, _______,    KC_END,  MS_BTN1, MS_BTN2,
                                                                        _______,    ALT_BSP
     ),
 
