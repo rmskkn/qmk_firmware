@@ -1,13 +1,14 @@
 CompileFlags:
     Add:
         [
-          -Wno-unknown-attributes
-          -Wno-maybe-uninitialized
-          -Wno-unknown-warning-option
-          -Wno-duplicate-decl-specifier
+          -Wno-unknown-attributes,
+          -Wno-maybe-uninitialized,
+          -Wno-unknown-warning-option,
+          -Wno-duplicate-decl-specifier,
           -Wno-pointer-to-int-cast,
           -Wno-int-to-void-pointer-cast,
           -DPROGMEM=,
+        ]
     Remove:
         [
             -W*,
