@@ -3,6 +3,20 @@
 
 #pragma once
 
+#undef MATRIX_ROW_PINS
+#undef MATRIX_COL_PINS
+#undef MATRIX_ROW_PINS_RIGHT
+#undef MATRIX_COL_PINS_RIGHT
+
+// C7 is a 6th row, 6x6 matrix
+// Left side
+#define MATRIX_ROW_PINS             { GP21, GP16, GP14, GP13, GP12, GP9 }
+#define MATRIX_COL_PINS             { GP8, GP6, GP5, GP4, GP3, GP2 }
+
+//Right side
+#define MATRIX_ROW_PINS_RIGHT       { GP14, GP13, GP12, GP9, GP8, GP23 }
+#define MATRIX_COL_PINS_RIGHT       { GP20, GP22, GP26, GP27, GP28, GP29 }
+
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
 
